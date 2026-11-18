@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#6d91b5">
+
+    <title>Sky Note | Weather</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body class="sunny">
+    <div class="app">
+
+        <!-- Header -->
+        <header>
+            <div>
+                <button id="placeBtn" class="place">
+                    Tamsui <span>⌄</span>
+                </button>
+                <p id="todayDate">Loading...</p>
+            </div>
+
+            <button id="settingsBtn" class="round" aria-label="設定">
+                ⚙
+            </button>
+        </header>
+
+        <!-- Home -->
+        <main id="home">
+
+            <!-- Current Weather -->
+            <button class="current glass" id="currentCard">
+                <div class="eyebrow">
+                    RIGHT NOW <span>↗</span>
+                </div>
+
+                <div class="currentRow">
+                    <div>
+                        <div id="temp" class="temperature">--°</div>
+                        <div id="condition" class="condition">Loading...</div>
+                        <div id="feels" class="feels">
+                            Feels like --°
+                        </div>
+                    </div>
+
+                    <div id="bigIcon" class="bigIcon">☀️</div>
+                </div>
+
+                <div class="hint">
+                    Tap for today's details →
+                </div>
+            </button>
+
+            <!-- Hourly Forecast -->
+            <section class="glass section">
+                <div class="sectionTitle">
+                    <h2>Hourly :</h2>
+                    <span>→</span>
+                </div>
+
+                <div id="hourly" class="hourly"></div>
+            </section>
+
+            <!-- Weekly Forecast -->
+            <section class="glass section">
+                <div class="sectionTitle">
+                    <h2>7-Day :</h2>
+                    <span>Tap a day</span>
+                </div>
+
+                <div id="weekly" class="weekly"></div>
+            </section>
+
+
+        </main>
+
+        <!-- Weather Details -->
+        <section id="details" class="page hidden">
+            <button class="back" data-back>×</button>
+
+            <h1 id="detailTitle">Today's Weather</h1>
+
+            <div class="glass detailHero">
+                <span id="detailIcon">☀️</span>
+                <strong id="detailTemp">--°</strong>
+                <p id="detailCondition">--</p>
+            </div>
+
+            <div class="detailGrid" id="detailGrid"></div>
+        </section>
+
+        <!-- Settings -->
+        <section id="settings" class="page hidden">
+            <button class="back" data-back>×</button>
+
+            <h1>Settings</h1>
+
+            <div class="glass form">
+
+                <!-- Location -->
+                <label for="cityInput">
+                    Notification & weather location
+                </label>
+
+                <input
+                    id="cityInput"
+                    placeholder="Search a city (e.g. Tamsui)"
+                    autocomplete="off"
+                >
+
+                <button id="searchCity">
+                    Search city
+                </button>
+
+                <div id="cityResults"></div>
+
+                <p class="small">
+                    Selected: <b id="selectedCity">Tamsui</b>
+                </p>
+
+                <hr>
+
+                <!-- Notifications -->
+                <label class="switchrow">
+                    <span>Weather notifications (future feature)</span>
+                    <input id="notifyOn" type="checkbox">
+                </label>
+
+                <label for="notifyCount">
+                    Notifications per day
+                </label>
+
+                <select id="notifyCount">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+
+                <div id="times"></div>
+
+                <!-- Advice Settings -->
+                <label class="switchrow">
+                    <span>Rain advice</span>
+                    <input type="checkbox" id="rainAdvice" checked>
+                </label>
+
+                <label class="switchrow">
+                    <span>Temperature advice</span>
+                    <input type="checkbox" id="tempAdvice" checked>
+                </label>
+
+                <label class="switchrow">
+                    <span>Pressure change advice</span>
+                    <input type="checkbox" id="pressureAdvice" checked>
+                </label>
+
+                <!-- Save -->
+                <button id="saveSettings">
+                    Save settings
+                </button>
+
+            </div>
+        </section>
+
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
