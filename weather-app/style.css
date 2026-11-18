@@ -1,0 +1,543 @@
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    background: #809ab2;
+}
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #8ab9db;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background-image .4s;
+}
+
+/* Weather Backgrounds */
+
+body.sunny {
+    background-image:
+        linear-gradient(180deg, #2d7fbd44, #b1dff288),
+        url('images/sunny.svg');
+}
+
+body.cloudy {
+    background-image:
+        linear-gradient(180deg, #536c8744, #a7b7c488),
+        url('images/cloudy.svg');
+}
+
+body.rainy {
+    background-image:
+        linear-gradient(180deg, #1e374d66, #5c849988),
+        url('images/rainy.svg');
+}
+
+body.night {
+    background-image:
+        linear-gradient(180deg, #08132b44, #233d6588),
+        url('images/night.svg');
+}
+
+/* Main App */
+
+.app {
+    max-width: 430px;
+    min-height: 100dvh;
+    margin: auto;
+    padding:
+        calc(23px + env(safe-area-inset-top))
+        18px
+        calc(35px + env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, #081f3510, #0b1c3040);
+}
+
+/* General Elements */
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Header */
+
+header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.place {
+    border: 0;
+    background: none;
+    padding: 0;
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    text-align: left;
+}
+
+header p {
+    font-size: 13px;
+    margin: 5px 0;
+    color: #fffde0;
+}
+
+.round {
+    background: #ffffff36;
+    border: 1px solid #ffffff66;
+    color: white;
+    border-radius: 50%;
+    height: 44px;
+    width: 44px;
+    font-size: 23px;
+}
+
+/* Glass Effect */
+
+.glass {
+    background: #f5fbff2b;
+    border: 1px solid #ffffff60;
+    border-radius: 23px;
+    box-shadow: 0 10px 28px #122f4a17;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/* Current Weather */
+
+.current {
+    display: block;
+    width: 100%;
+    text-align: left;
+    color: white;
+    padding: 21px 23px 16px;
+    margin-bottom: 18px;
+}
+
+.eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+}
+
+.currentRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.temperature {
+    font-size: 79px;
+    font-weight: 200;
+    letter-spacing: -6px;
+    line-height: 1.25;
+}
+
+.condition {
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.feels {
+    font-size: 13px;
+    margin-top: 6px;
+    opacity: .9;
+}
+
+.bigIcon {
+    font-size: 76px;
+    filter: drop-shadow(0 6px 10px #0002);
+}
+
+.hint {
+    font-size: 11px;
+    opacity: .8;
+    text-align: right;
+    margin-top: 22px;
+}
+
+/* Sections */
+
+.section {
+    padding: 20px 16px;
+    margin-bottom: 18px;
+}
+
+.sectionTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.sectionTitle h2 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.sectionTitle span {
+    font-size: 12px;
+    opacity: .8;
+}
+
+/* Hourly Forecast */
+
+.hourly {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+}
+
+.hourly::-webkit-scrollbar {
+    display: none;
+}
+
+.hour {
+    min-width: 65px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.hour .time {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.hour .emoji {
+    font-size: 26px;
+}
+
+.hour .value {
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.hour.special {
+    min-width: 83px;
+    color: #fff7c5;
+}
+
+/* Weekly Forecast */
+
+.weekly {
+    display: flex;
+    flex-direction: column;
+}
+
+.day {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #ffffff42;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 45px 1fr 14px;
+    align-items: center;
+    gap: 7px;
+    padding: 13px 3px;
+    text-align: left;
+}
+
+.day:last-child {
+    border-bottom: 0;
+}
+
+.day span:nth-child(2) {
+    font-size: 23px;
+    text-align: center;
+}
+
+.day .range {
+    text-align: right;
+    font-size: 13px;
+}
+
+.day .arrow {
+    opacity: .8;
+}
+
+/* Footer */
+
+.foot {
+    text-align: center;
+    font-size: 10px;
+    opacity: .8;
+    margin-top: 20px;
+}
+
+/* Page Navigation */
+
+.hidden {
+    display: none !important;
+}
+
+.page h1 {
+    font-size: 27px;
+    margin: 20px 0;
+}
+
+.back {
+    background: none;
+    color: white;
+    border: 0;
+    font-size: 15px;
+    padding: 8px 0;
+}
+
+/* Weather Details */
+
+.detailHero {
+    text-align: center;
+    padding: 26px;
+}
+
+.detailHero span {
+    font-size: 65px;
+    display: block;
+}
+
+.detailHero strong {
+    display: block;
+    font-size: 65px;
+    font-weight: 250;
+}
+
+.detailHero p {
+    margin: 0;
+}
+
+.detailGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.detailItem {
+    padding: 16px;
+    min-height: 105px;
+}
+
+.detailItem .label {
+    font-size: 12px;
+    opacity: .85;
+}
+
+.detailItem .val {
+    font-size: 21px;
+    margin-top: 13px;
+    font-weight: 600;
+}
+
+/* Settings */
+
+.form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form input:not([type=checkbox]),
+.form select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 11px;
+    border: 1px solid #fff9;
+    background: #ffffffd9;
+    color: #243b50;
+}
+
+.form button:not(.cityOption) {
+    background: #fff;
+    color: #254864;
+    border: 0;
+    border-radius: 11px;
+    padding: 12px;
+    font-weight: 700;
+}
+
+.small {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.switchrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.switchrow input {
+    width: 20px;
+    height: 20px;
+}
+
+.cityOption {
+    width: 100%;
+    text-align: left;
+    padding: 12px;
+    background: #ffffff22;
+    color: white;
+    border: 1px solid #ffffff55;
+    border-radius: 9px;
+    margin: 3px 0;
+}
+
+.form hr {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #ffffff66;
+}
+
+/* Desktop */
+
+@media (min-width: 600px) {
+    body {
+        background-size: cover;
+    }
+
+    .app {
+        box-shadow: 0 0 45px #0004;
+    }
+}
+
+/* Small Smartphones */
+
+@media (max-width: 360px) {
+    .temperature {
+        font-size: 66px;
+    }
+
+    .bigIcon {
+        font-size: 58px;
+    }
+}
+
+
+
+/* Hourly Forecast */
+.hourly {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 5px 0 12px;
+    scroll-snap-type: x proximity;
+}
+
+.hour {
+    flex: 0 0 68px;
+    min-width: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 5px;
+    border-radius: 16px;
+    background: #ffffff18;
+    scroll-snap-align: start;
+}
+
+.hour .time {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.hour .emoji {
+    font-size: 30px;
+    line-height: 1.4;
+}
+
+.hour .value {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.hour.special {
+    flex-basis: 80px;
+    min-width: 80px;
+    background: #fff4c52a;
+    color: #fff7c5;
+}
+
+/* Horizontal 7-Day Forecast */
+.weekly {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+}
+
+.weekly::-webkit-scrollbar {
+    display: none;
+}
+
+.day {
+    flex: 0 0 82px;
+    min-width: 82px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 8px;
+    border: 1px solid #ffffff40;
+    border-radius: 16px;
+    background: #ffffff18;
+    text-align: center;
+    scroll-snap-align: start;
+}
+
+.day:last-child {
+    border-bottom: 1px solid #ffffff40;
+}
+
+.dayName {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.dayIcon {
+    font-size: 30px;
+}
+
+.dayHigh {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.dayLow {
+    font-size: 13px;
+    opacity: 0.75;
+}
