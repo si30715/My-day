@@ -155,35 +155,50 @@ function applyBackground() {
 async function loadWeather() {
     const { latitude, longitude, timezone } = settings.city;
 
-    const params = new URLSearchParams({
-        latitude,
-        longitude,
-        timezone,
-        current: [
-            'temperature_2m',
-            'apparent_temperature',
-            'relative_humidity_2m',
-            'weather_code',
-            'pressure_msl',
-            'wind_speed_10m'
-        ].join(','),
-        hourly: [
-            'temperature_2m',
-            'precipitation_probability',
-            'weather_code'
-        ].join(','),
-        daily: [
-            'weather_code',
-            'temperature_2m_max',
-            'temperature_2m_min',
-            'precipitation_probability_max',
-            'sunrise',
-            'sunset',
-            'uv_index_max'
-        ].join(','),
-        forecast_days: '7',
-        forecast_hours: '168'
-    });
+   
+const params = new URLSearchParams({
+    latitude,
+    longitude,
+    timezone,
+
+    models: 'best_match',
+
+    current: [
+        'temperature_2m',
+        'apparent_temperature',
+        'relative_humidity_2m',
+        'weather_code',
+        'pressure_msl',
+        'wind_speed_10m',
+        'precipitation',
+        'rain',
+        'cloud_cover'
+    ].join(','),
+
+    hourly: [
+        'temperature_2m',
+        'precipitation_probability',
+        'precipitation',
+        'rain',
+        'showers',
+        'cloud_cover',
+        'weather_code'
+    ].join(','),
+
+    daily: [
+        'weather_code',
+        'temperature_2m_max',
+        'temperature_2m_min',
+        'precipitation_probability_max',
+        'precipitation_sum',
+        'sunrise',
+        'sunset',
+        'uv_index_max'
+    ].join(','),
+
+    forecast_days: '7',
+    forecast_hours: '168'
+});
 
     $('condition').textContent = 'Loading weather...';
 
@@ -251,14 +266,21 @@ function renderHourly() {
     if (start < 0) start = 0;
 
     // Get the next 24 hours
-    const rows = h.time.slice(start, start + 24).map(
-        (time, index) => ({
-            time,
-            temp: h.temperature_2m[start + index],
-            icon: codeIcon(h.weather_code[start + index]),
-            special: false
-        })
-    );
+    
+const rows = h.time.slice(start, start + 24).map(
+    (time, index) => ({
+        time,
+        temp: h.temperature_2m[start + index],
+        icon: codeIcon(h.weather_code[start + index]),
+
+        // Rain and cloud data
+        rainAmount: h.precipitation[start + index],
+        rainChance: h.precipitation_probability[start + index],
+        cloudCover: h.cloud_cover[start + index],
+
+        special: false
+    })
+);
 
     if (!rows.length) {
         $('hourly').textContent = 'Hourly forecast unavailable';
@@ -309,25 +331,47 @@ function renderHourly() {
 
     rows.sort((a, b) => a.time.localeCompare(b.time));
 
-    $('hourly').innerHTML = rows.map(r => {
-        const isNow =
-            !r.special &&
-            r.time.slice(0, 13) === currentHour;
+    
+$('hourly').innerHTML = rows.map(r => {
+    const isNow =
+        !r.special &&
+        r.time.slice(0, 13) === currentHour;
 
-        return `
-            <div class="hour ${r.special ? 'special' : ''}">
-                <span class="time">
-                    ${isNow ? 'Now' : shortTime(r.time)}
-                </span>
+    return `
+        <div class="hour ${r.special ? 'special' : ''}">
 
-                <span class="emoji">${r.icon}</span>
+            <span class="time">
+                ${isNow ? 'Now' : shortTime(r.time)}
+            </span>
 
-                <span class="value">
-                    ${r.special ? r.label : fmt(r.temp)}
-                </span>
-            </div>
-        `;
-    }).join('');
+            <span class="emoji">${r.icon}</span>
+
+            <span class="value">
+                ${r.special ? r.label : fmt(r.temp)}
+            </span>
+
+            ${!r.special ? `
+                <div class="rainInfo">
+                    <span class="rainChance">
+                        💧 ${r.rainChance ?? '--'}%
+                    </span>
+
+
+                    ${Number.isFinite(r.rainAmount) && r.rainAmount >= 0.05
+                        ? `
+                            <span class="rainAmount">
+                                ${r.rainAmount.toFixed(1)} mm
+                            </span>
+                        `
+                        : ''}
+                    
+                </div>
+            ` : ''}
+
+        </div>
+    `;
+}).join('');
+
 }
 
 // Weekly Forecast

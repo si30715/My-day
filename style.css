@@ -541,3 +541,35 @@ header p {
     font-size: 13px;
     opacity: 0.75;
 }
+
+
+/* Hourly Rain Information */
+
+.hour {
+    justify-content: flex-start;
+}
+
+.rainInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.rainChance {
+    font-size: 12px;
+    font-weight: 600;
+    color: #d9f1ff;
+    white-space: nowrap;
+}
+
+.rainAmount {
+    font-size: 11px;
+    color: #ffffffcc;
+    white-space: nowrap;
+}
+
+.hour.special .rainInfo {
+    display: none;
+}
