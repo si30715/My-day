@@ -416,22 +416,30 @@ function openDetail(i = 0) {
     $('detailTitle').textContent =
         today ? "Today's Weather" : dateLabel(d.time[i]);
 
-    $('detailIcon').textContent =
-        codeIcon(d.weather_code[i]);
+
+        $('detailIcon').textContent = codeIcon(
+            today ? c.weather_code : d.weather_code[i]
+        );
+        
 
     $('detailTemp').textContent =
         today
             ? fmt(c.temperature_2m)
             : fmt(d.temperature_2m_max[i]);
 
-    $('detailCondition').textContent =
-        condition(d.weather_code[i]);
 
+            $('detailCondition').textContent = condition(
+                today ? c.weather_code : d.weather_code[i]
+            );
+            
     const items = [
+
+
         [
-            '🌧️ Rain chance',
-            fmt(d.precipitation_probability_max[i], '%')
+            '🌧️ Max rain chance (daily)',
+             fmt(d.precipitation_probability_max[i], '%')
         ],
+
         [
             '🌡️ High / Low',
             fmt(d.temperature_2m_max[i]) +
